@@ -131,6 +131,7 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->chromeSupport->setChecked(settings->browserSupport(BrowserShared::CHROME));
     m_ui->chromiumSupport->setChecked(settings->browserSupport(BrowserShared::CHROMIUM));
     m_ui->firefoxSupport->setChecked(settings->browserSupport(BrowserShared::FIREFOX));
+    m_ui->waterfoxSupport->setChecked(settings->browserSupport(BrowserShared::WATERFOX));
     m_ui->edgeSupport->setChecked(settings->browserSupport(BrowserShared::EDGE));
 #ifndef Q_OS_WIN
     m_ui->braveSupport->setChecked(settings->browserSupport(BrowserShared::BRAVE));
@@ -260,6 +261,7 @@ void BrowserSettingsWidget::saveSettings()
     settings->setBrowserSupport(BrowserShared::CHROME, m_ui->chromeSupport->isChecked());
     settings->setBrowserSupport(BrowserShared::CHROMIUM, m_ui->chromiumSupport->isChecked());
     settings->setBrowserSupport(BrowserShared::FIREFOX, m_ui->firefoxSupport->isChecked());
+    settings->setBrowserSupport(BrowserShared::WATERFOX, m_ui->waterfoxSupport->isChecked());
     settings->setBrowserSupport(BrowserShared::EDGE, m_ui->edgeSupport->isChecked());
 #ifndef Q_OS_WIN
     settings->setBrowserSupport(BrowserShared::BRAVE, m_ui->braveSupport->isChecked());

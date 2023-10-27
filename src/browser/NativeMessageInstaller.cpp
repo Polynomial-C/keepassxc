@@ -67,6 +67,7 @@ namespace
     const QString TARGET_DIR_CHROME = QStringLiteral("/google-chrome/NativeMessagingHosts");
     const QString TARGET_DIR_CHROMIUM = QStringLiteral("/chromium/NativeMessagingHosts");
     const QString TARGET_DIR_FIREFOX = QStringLiteral("/.mozilla/native-messaging-hosts");
+    const QString TARGET_DIR_WATERFOX = QStringLiteral("/.waterfox/native-messaging-hosts");
     const QString TARGET_DIR_VIVALDI = QStringLiteral("/vivaldi/NativeMessagingHosts");
     const QString TARGET_DIR_TOR_BROWSER = QStringLiteral(
         "/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts");
@@ -152,6 +153,8 @@ QString NativeMessageInstaller::getTargetPath(SupportedBrowsers browser) const
         return TARGET_DIR_CHROMIUM;
     case SupportedBrowsers::FIREFOX:
         return TARGET_DIR_FIREFOX;
+    case SupportedBrowsers::WATERFOX:
+        return TARGET_DIR_WATERFOX;
     case SupportedBrowsers::VIVALDI:
         return TARGET_DIR_VIVALDI;
     case SupportedBrowsers::TOR_BROWSER:
@@ -183,6 +186,8 @@ QString NativeMessageInstaller::getBrowserName(SupportedBrowsers browser) const
         return QStringLiteral("chromium");
     case SupportedBrowsers::FIREFOX:
         return QStringLiteral("firefox");
+    case SupportedBrowsers::WATERFOX:
+        return QStringLiteral("waterfox");
     case SupportedBrowsers::VIVALDI:
         return QStringLiteral("vivaldi");
     case SupportedBrowsers::TOR_BROWSER:
@@ -228,7 +233,7 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
 #elif defined(Q_OS_LINUX) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
     if (browser == SupportedBrowsers::TOR_BROWSER) {
         basePath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
-    } else if (browser == SupportedBrowsers::FIREFOX) {
+    } else if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::WATERFOX) {
         basePath = QDir::homePath();
     } else {
         basePath = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
@@ -323,7 +328,8 @@ QJsonObject NativeMessageInstaller::constructFile(SupportedBrowsers browser)
     QJsonArray arr;
     if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::TOR_BROWSER
         || (browser == SupportedBrowsers::CUSTOM
-            && browserSettings()->customBrowserType() == SupportedBrowsers::FIREFOX)) {
+            && browserSettings()->customBrowserType() == SupportedBrowsers::FIREFOX)
+        || (browser == SupportedBrowsers::WATERFOX)) {
         for (const QString& extension : ALLOWED_EXTENSIONS) {
             arr.append(extension);
         }

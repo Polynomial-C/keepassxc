@@ -64,6 +64,11 @@ setupFirefox() {
     INSTALL_DIR="${BASE_DIR}/.mozilla/native-messaging-hosts"
 }
 
+setupWaterfox() {
+    JSON_OUT=${JSON_FIREFOX}
+    INSTALL_DIR="${BASE_DIR}/.waterfox/native-messaging-hosts"
+}
+
 setupChrome() {
     JSON_OUT=${JSON_CHROME}
     INSTALL_DIR="${BASE_DIR}/.config/google-chrome/NativeMessagingHosts"
@@ -109,6 +114,7 @@ BROWSER=$(whiptail \
             "5" "Brave" \
             "6" "Tor Browser" \
             "7" "Microsoft Edge" \
+            "8" "Waterfox" \
             3>&1 1>&2 2>&3)
 
 exitstatus=$?
@@ -125,6 +131,7 @@ if [[ $exitstatus == 0 ]]; then
         5) setupBrave ;;
         6) setupTorBrowser ;;
         7) setupEdge ;;
+        8) setupWaterfox ;;
     esac
 
     # Install the JSON file
